@@ -3,11 +3,11 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry excluding="src/" kind="src" path=""/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="/home/kvothe/Documents/GitHub/p8_guidotti_dario/External JARs/StanfordAPI/stanford-parser.jar" sourcepath="/home/kvothe/Documents/GitHub/p8_guidotti_dario/External JARs/StanfordAPI/stanford-parser-3.7.0-sources.jar">
+	<classpathentry kind="lib" path="D:/Documenti/GitHub/p8_guidotti_dario/External JARs/StanfordAPI/stanford-parser.jar" sourcepath="D:/Documenti/GitHub/p8_guidotti_dario/External JARs/StanfordAPI/stanford-parser-3.7.0-sources.jar">
 		<attributes>
-			<attribute name="javadoc_location" value="jar:file:/home/kvothe/Documents/GitHub/p8_guidotti_dario/External%20JARs/StanfordAPI/stanford-parser-3.7.0-javadoc.jar!/"/>
+			<attribute name="javadoc_location" value="jar:file:/D:/Documenti/GitHub/p8_guidotti_dario/External%20JARs/StanfordAPI/stanford-parser-3.7.0-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="/home/kvothe/Documents/GitHub/p8_guidotti_dario/External JARs/JenaAPI/jena-core-3.2.0.jar" sourcepath="/home/kvothe/Documents/GitHub/p8_guidotti_dario/External JARs/JenaAPI/src/jena-core-3.2.0-sources.jar"/>
+	<classpathentry kind="lib" path="D:/Documenti/GitHub/p8_guidotti_dario/External JARs/JenaAPI/jena-core-3.2.0.jar" sourcepath="D:/Documenti/GitHub/p8_guidotti_dario/External JARs/JenaAPI/src/jena-core-3.2.0-sources.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

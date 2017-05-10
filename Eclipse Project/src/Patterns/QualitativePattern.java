@@ -1,3 +1,4 @@
+package Patterns;
 /**
  * 
  */
@@ -7,11 +8,9 @@
  *
  */
 public abstract class QualitativePattern extends Pattern {
-
-	/* (non-Javadoc)
-	 * @see Pattern#asString()
-	 */
-	@Override
-	public abstract String asString();
-
+	
+	public QualitativePattern(){
+		super();
+	}
+	
 }
