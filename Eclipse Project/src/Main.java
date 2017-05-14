@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -6,9 +7,12 @@ import org.apache.jena.ontology.OntProperty;
 import Patterns.DurationPattern;
 import Patterns.OccurencePattern;
 import Patterns.OrderPattern;
+import Patterns.Pattern;
 import Patterns.PeriodicPattern;
 import Patterns.RTOrderPattern;
 import Patterns.Scope;
+import edu.stanford.nlp.trees.Tree;
+import edu.stanford.nlp.util.ScoredObject;
 
 public class Main {
 
@@ -89,11 +93,36 @@ public class Main {
 			System.out.println(myIter.next().toString());
 		}
 		
+		//Prova AssociationStanfordStrategy
+		ArrayList<Pattern> patternsModel = new ArrayList<Pattern>();
+		patternsModel.add(myRTOrderPattern);
+		patternsModel.add(myDurationPattern);
+		patternsModel.add(myOccurencePattern);
+		patternsModel.add(myOrderPattern);
+		patternsModel.add(myPeriodicPattern);
+		AssociationStanfordStrategy myStrategy = new AssociationStanfordStrategy(myContext, patternsModel);
+		Requirement myRequirement = new Requirement();
+		myRequirement.setId(0);
+		myRequirement.setRequirement("When {Tdistance} is greater than 10000, {Tleave} shall {Req10} be set to false.");
+		myStrategy.associatePattern(myRequirement);
+		Iterator<ScoredObject<Tree>> myTreesIter = myStrategy.getTrees().iterator();
 		
+		while(myTreesIter.hasNext()){
 		
+			myTreesIter.next().object().pennPrint();
 		
+		}
 		
-		
+		System.out.println("Single Tree Print:");
+		myTreesIter = myStrategy.getTrees().iterator();
+		Tree myTree = myTreesIter.next().object();
+		List<Tree> leaves = myTree.getLeaves();
+		Iterator<Tree> iterLeaves = leaves.iterator();
+		while(iterLeaves.hasNext()){
+			Tree auxTree = iterLeaves.next();
+			auxTree.ancestor(1, myTree).pennPrint();
+			
+		}
 		
 		
 		
