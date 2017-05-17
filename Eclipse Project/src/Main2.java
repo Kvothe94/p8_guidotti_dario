@@ -17,8 +17,8 @@ public class Main2 {
 				//Verifica funzionamento parser stanford
 				
 		String reqs[] = {"After {Power-up} becomes true, {Tapproaching} shall {Req1} be set to false.",
-			"After {Power-up becomes true, {Tin} shall {Req2} be set to false.",
-			"After {Power-up becomes true, {Tleave} shall {Req3} be set to false.",
+			"After {Power-up} becomes true, {Tin} shall {Req2} be set to false.",
+			"After {Power-up} becomes true, {Tleave} shall {Req3} be set to false.",
 			"After {Power-up} becomes true, {Gopen} shall {Req4} be set to true.",
 			"When {Tdistance} is less than 3000, {Tapproaching} shall {Req5} be set to true.",
 			"If {Tapproaching} is true, then {Gopen} shall {Req6} be set to false.",
@@ -52,13 +52,24 @@ public class Main2 {
 					System.out.println(scoredObject.score());
 						
 					System.out.println("");
-					System.out.println("Single Tree Print:");
+					System.out.println("");
 					Tree myTree = scoredObject.object();
+					String myOnlineTree = myTree.toString();
+					myOnlineTree = myOnlineTree.replaceAll("\\(", "{");
+					myOnlineTree = myOnlineTree.replaceAll("\\)", "}");
+					System.out.print("ONLINE: " + myOnlineTree);
+					System.out.println("");
+					System.out.println("");
+					System.out.println("Single Tree Print:");
 					List<Tree> leaves = myTree.getLeaves();
 					Iterator<Tree> iterLeaves = leaves.iterator();
 					while(iterLeaves.hasNext()){
 						Tree auxTree = iterLeaves.next();
-						auxTree.ancestor(1, myTree).pennPrint();
+						System.out.println(auxTree.ancestor(1, myTree).label().toString());
+						System.out.println(auxTree.label().toString());
+						if(auxTree.ancestor(1, myTree).label().toString().equals("NNP")){
+							System.out.println("NNP TROVATO");
+						}
 					}
 				}
 			}

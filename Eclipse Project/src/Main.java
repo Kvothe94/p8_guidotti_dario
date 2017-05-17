@@ -105,7 +105,7 @@ public class Main {
 		myRequirement.setId(0);
 		myRequirement.setRequirement("When {Tdistance} is greater than 10000, {Tleave} shall {Req10} be set to false.");
 		myStrategy.associatePattern(myRequirement);
-		Iterator<ScoredObject<Tree>> myTreesIter = myStrategy.getTrees().iterator();
+		Iterator<ScoredObject<Tree>> myTreesIter = myStrategy.getReqTrees().iterator();
 		
 		while(myTreesIter.hasNext()){
 		
@@ -114,7 +114,7 @@ public class Main {
 		}
 		
 		System.out.println("Single Tree Print:");
-		myTreesIter = myStrategy.getTrees().iterator();
+		myTreesIter = myStrategy.getReqTrees().iterator();
 		Tree myTree = myTreesIter.next().object();
 		List<Tree> leaves = myTree.getLeaves();
 		Iterator<Tree> iterLeaves = leaves.iterator();

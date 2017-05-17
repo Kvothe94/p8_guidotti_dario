@@ -1,4 +1,6 @@
 import java.io.StringReader;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import Patterns.Pattern;
 import edu.stanford.nlp.ling.HasWord;
@@ -19,31 +21,87 @@ import edu.stanford.nlp.util.ScoredObject;
  */
 public class AssociationStanfordStrategy extends AssociationStrategy {
 	
-	private final int NUM_TREE = 5;
-	private List<ScoredObject<Tree>> trees;
+	private static final int NUM_TREE = 5;
+	private static final int WORST_SCORE = -1000000;
+	private List<ScoredObject<Tree>> reqTrees;
+	private List<Tree> modelTrees;
+	private LexicalizedParser lexParser;
 
 	/**
 	 * @param context
 	 * @param patternsModel
 	 */
 	public AssociationStanfordStrategy(Context context, List<Pattern> patternsModel) {
+		
 		super(context, patternsModel);
-		// TODO Auto-generated constructor stub
+		String parserModel = "englishPCFG.ser.gz";
+		this.lexParser = LexicalizedParser.loadModel(parserModel);
+		TreebankLanguagePack tlp = lexParser.getOp().langpack();
+		this.modelTrees = new ArrayList<Tree>();
+		Iterator<Pattern> patternIter = patternsModel.iterator();
+		
+		while(patternIter.hasNext()){
+			
+			Pattern auxPattern = patternIter.next();
+			Tokenizer<? extends HasWord> toke =
+			        tlp.getTokenizerFactory().getTokenizer(new StringReader(auxPattern.asString()));
+			List<? extends HasWord> mySentence = toke.tokenize();
+			ParserQuery pq = lexParser.parserQuery();
+			pq.parse(mySentence);
+			modelTrees.add(pq.getBestParse());
+			
+		}
+		
 	}
+	
 
 	/**
-	 * @return the trees
+	 * @return the reqTrees
 	 */
-	public List<ScoredObject<Tree>> getTrees() {
-		return trees;
+	public List<ScoredObject<Tree>> getReqTrees() {
+		return reqTrees;
 	}
 
+
 	/**
-	 * @param trees the trees to set
+	 * @param reqTrees the reqTrees to set
 	 */
-	public void setTrees(List<ScoredObject<Tree>> trees) {
-		this.trees = trees;
+	public void setReqTrees(List<ScoredObject<Tree>> reqTrees) {
+		this.reqTrees = reqTrees;
 	}
+
+
+	/**
+	 * @return the modelTrees
+	 */
+	public List<Tree> getModelTrees() {
+		return modelTrees;
+	}
+
+
+	/**
+	 * @param modelTrees the modelTrees to set
+	 */
+	public void setModelTrees(List<Tree> modelTrees) {
+		this.modelTrees = modelTrees;
+	}
+
+
+	/**
+	 * @return the lexParser
+	 */
+	public LexicalizedParser getLexParser() {
+		return lexParser;
+	}
+
+
+	/**
+	 * @param lexParser the lexParser to set
+	 */
+	public void setLexParser(LexicalizedParser lexParser) {
+		this.lexParser = lexParser;
+	}
+
 
 	/* (non-Javadoc)
 	 * @see AssociationStrategy#associatePattern(Requirement)
@@ -51,15 +109,44 @@ public class AssociationStanfordStrategy extends AssociationStrategy {
 	@Override
 	public Pattern associatePattern(Requirement requirement) {
 		
-		String parserModel = "englishPCFG.ser.gz";
-		LexicalizedParser lp = LexicalizedParser.loadModel(parserModel);
-		TreebankLanguagePack tlp = lp.getOp().langpack();
+		TreebankLanguagePack tlp = lexParser.getOp().langpack();
 		Tokenizer<? extends HasWord> toke =
 		        tlp.getTokenizerFactory().getTokenizer(new StringReader(requirement.getRequirement()));
 		List<? extends HasWord> mySentence = toke.tokenize();
-		ParserQuery pq = lp.parserQuery();
+		ParserQuery pq = lexParser.parserQuery();
 		pq.parse(mySentence);
-		trees = pq.getKBestParses(NUM_TREE);
+		reqTrees = pq.getKBestParses(NUM_TREE);
+		
+		int bestIndex = -1;
+		int bestScore = WORST_SCORE;
+		TreeOntologyVisitor ontVis = new TreeOntologyVisitor();
+		TreeComparingVisitor comVis = new TreeComparingVisitor();
+		
+		/*
+		 * Trattamento degli alberi utilizzando l'ontologia: per il momento è una semplice verifica
+		 * che le parole indicate come nomi corrispondano a entità all'interno dell'ontologia.
+		 * Eventualmente si dovrebbe migliorare il trattamento dei dati.
+		 */
+		for(int i = 0; i < reqTrees.size(); i++){
+			
+			ontVis.visit(this, i);
+			if(ontVis.getScore() > bestScore){
+				bestScore = ontVis.getScore();
+				bestIndex = i;
+			}
+			
+		}
+		
+		comVis.visit(this, bestIndex);
+		int bestModelIndex = comVis.getBestModelIndex();
+		
+		return null;
+	}
+	
+	private Pattern generatePatternFromTree(Tree tree){
+		
+		
+		
 		
 		
 		
@@ -69,3 +156,33 @@ public class AssociationStanfordStrategy extends AssociationStrategy {
 	}
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

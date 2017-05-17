@@ -22,6 +22,34 @@ public abstract class AssociationStrategy {
 		this.patternsModel = patternsModel;
 	}
 	
+	/**
+	 * @return the context
+	 */
+	public Context getContext() {
+		return context;
+	}
+
+	/**
+	 * @param context the context to set
+	 */
+	public void setContext(Context context) {
+		this.context = context;
+	}
+
+	/**
+	 * @return the patternsModel
+	 */
+	public List<Pattern> getPatternsModel() {
+		return patternsModel;
+	}
+
+	/**
+	 * @param patternsModel the patternsModel to set
+	 */
+	public void setPatternsModel(List<Pattern> patternsModel) {
+		this.patternsModel = patternsModel;
+	}
+
 	public abstract Pattern associatePattern(Requirement requirement);
 	
 }
