@@ -3,38 +3,38 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry excluding="src/" kind="src" path=""/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="D:/Documenti/GitHub/p8_guidotti_dario/External JARs/StanfordAPI/stanford-parser.jar" sourcepath="D:/Documenti/GitHub/p8_guidotti_dario/External JARs/StanfordAPI/stanford-parser-3.7.0-sources.jar">
+	<classpathentry kind="lib" path="/home/kvothe/Documents/GitHub/p8_guidotti_dario/External JARs/JenaAPI/collection-0.6.jar"/>
+	<classpathentry kind="lib" path="/home/kvothe/Documents/GitHub/p8_guidotti_dario/External JARs/JenaAPI/commons-cli-1.3.jar"/>
+	<classpathentry kind="lib" path="/home/kvothe/Documents/GitHub/p8_guidotti_dario/External JARs/JenaAPI/commons-codec-1.10.jar"/>
+	<classpathentry kind="lib" path="/home/kvothe/Documents/GitHub/p8_guidotti_dario/External JARs/JenaAPI/commons-csv-1.3.jar"/>
+	<classpathentry kind="lib" path="/home/kvothe/Documents/GitHub/p8_guidotti_dario/External JARs/JenaAPI/commons-io-2.5.jar"/>
+	<classpathentry kind="lib" path="/home/kvothe/Documents/GitHub/p8_guidotti_dario/External JARs/JenaAPI/commons-lang3-3.4.jar"/>
+	<classpathentry kind="lib" path="/home/kvothe/Documents/GitHub/p8_guidotti_dario/External JARs/JenaAPI/httpclient-4.5.2.jar"/>
+	<classpathentry kind="lib" path="/home/kvothe/Documents/GitHub/p8_guidotti_dario/External JARs/JenaAPI/httpclient-cache-4.5.2.jar"/>
+	<classpathentry kind="lib" path="/home/kvothe/Documents/GitHub/p8_guidotti_dario/External JARs/JenaAPI/httpcore-4.4.4.jar"/>
+	<classpathentry kind="lib" path="/home/kvothe/Documents/GitHub/p8_guidotti_dario/External JARs/JenaAPI/jackson-annotations-2.7.0.jar"/>
+	<classpathentry kind="lib" path="/home/kvothe/Documents/GitHub/p8_guidotti_dario/External JARs/JenaAPI/jackson-core-2.7.4.jar"/>
+	<classpathentry kind="lib" path="/home/kvothe/Documents/GitHub/p8_guidotti_dario/External JARs/JenaAPI/jackson-databind-2.7.4.jar"/>
+	<classpathentry kind="lib" path="/home/kvothe/Documents/GitHub/p8_guidotti_dario/External JARs/JenaAPI/jcl-over-slf4j-1.7.21.jar"/>
+	<classpathentry kind="lib" path="/home/kvothe/Documents/GitHub/p8_guidotti_dario/External JARs/JenaAPI/jena-arq-3.2.0.jar"/>
+	<classpathentry kind="lib" path="/home/kvothe/Documents/GitHub/p8_guidotti_dario/External JARs/JenaAPI/jena-base-3.2.0.jar"/>
+	<classpathentry kind="lib" path="/home/kvothe/Documents/GitHub/p8_guidotti_dario/External JARs/JenaAPI/jena-cmds-3.2.0.jar"/>
+	<classpathentry kind="lib" path="/home/kvothe/Documents/GitHub/p8_guidotti_dario/External JARs/JenaAPI/jena-core-3.2.0.jar" sourcepath="/home/kvothe/Documents/GitHub/p8_guidotti_dario/External JARs/JenaAPI/src/jena-core-3.2.0-sources.jar"/>
+	<classpathentry kind="lib" path="/home/kvothe/Documents/GitHub/p8_guidotti_dario/External JARs/JenaAPI/jena-iri-3.2.0.jar"/>
+	<classpathentry kind="lib" path="/home/kvothe/Documents/GitHub/p8_guidotti_dario/External JARs/JenaAPI/jena-rdfconnection-3.2.0.jar"/>
+	<classpathentry kind="lib" path="/home/kvothe/Documents/GitHub/p8_guidotti_dario/External JARs/JenaAPI/jena-shaded-guava-3.2.0.jar"/>
+	<classpathentry kind="lib" path="/home/kvothe/Documents/GitHub/p8_guidotti_dario/External JARs/JenaAPI/jena-tdb-3.2.0.jar"/>
+	<classpathentry kind="lib" path="/home/kvothe/Documents/GitHub/p8_guidotti_dario/External JARs/JenaAPI/jsonld-java-0.9.0.jar"/>
+	<classpathentry kind="lib" path="/home/kvothe/Documents/GitHub/p8_guidotti_dario/External JARs/JenaAPI/libthrift-0.9.3.jar"/>
+	<classpathentry kind="lib" path="/home/kvothe/Documents/GitHub/p8_guidotti_dario/External JARs/JenaAPI/log4j-1.2.17.jar"/>
+	<classpathentry kind="lib" path="/home/kvothe/Documents/GitHub/p8_guidotti_dario/External JARs/JenaAPI/slf4j-api-1.7.21.jar"/>
+	<classpathentry kind="lib" path="/home/kvothe/Documents/GitHub/p8_guidotti_dario/External JARs/JenaAPI/slf4j-log4j12-1.7.21.jar"/>
+	<classpathentry kind="lib" path="/home/kvothe/Documents/GitHub/p8_guidotti_dario/External JARs/JenaAPI/xercesImpl-2.11.0.jar"/>
+	<classpathentry kind="lib" path="/home/kvothe/Documents/GitHub/p8_guidotti_dario/External JARs/JenaAPI/xml-apis-1.4.01.jar"/>
+	<classpathentry kind="lib" path="/home/kvothe/Documents/GitHub/p8_guidotti_dario/External JARs/StanfordAPI/stanford-parser.jar" sourcepath="/home/kvothe/Documents/GitHub/p8_guidotti_dario/External JARs/StanfordAPI/stanford-parser-3.7.0-sources.jar">
 		<attributes>
-			<attribute name="javadoc_location" value="jar:file:/D:/Documenti/GitHub/p8_guidotti_dario/External%20JARs/StanfordAPI/stanford-parser-3.7.0-javadoc.jar!/"/>
+			<attribute name="javadoc_location" value="jar:file:/home/kvothe/Documents/GitHub/p8_guidotti_dario/External%20JARs/StanfordAPI/stanford-parser-3.7.0-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="D:/Documenti/GitHub/p8_guidotti_dario/External JARs/JenaAPI/jena-core-3.2.0.jar" sourcepath="D:/Documenti/GitHub/p8_guidotti_dario/External JARs/JenaAPI/src/jena-core-3.2.0-sources.jar"/>
-	<classpathentry kind="lib" path="D:/Documenti/GitHub/p8_guidotti_dario/External JARs/JenaAPI/slf4j-api-1.7.21.jar"/>
-	<classpathentry kind="lib" path="D:/Documenti/GitHub/p8_guidotti_dario/External JARs/JenaAPI/collection-0.6.jar"/>
-	<classpathentry kind="lib" path="D:/Documenti/GitHub/p8_guidotti_dario/External JARs/JenaAPI/commons-cli-1.3.jar"/>
-	<classpathentry kind="lib" path="D:/Documenti/GitHub/p8_guidotti_dario/External JARs/JenaAPI/commons-codec-1.10.jar"/>
-	<classpathentry kind="lib" path="D:/Documenti/GitHub/p8_guidotti_dario/External JARs/JenaAPI/commons-csv-1.3.jar"/>
-	<classpathentry kind="lib" path="D:/Documenti/GitHub/p8_guidotti_dario/External JARs/JenaAPI/commons-io-2.5.jar"/>
-	<classpathentry kind="lib" path="D:/Documenti/GitHub/p8_guidotti_dario/External JARs/JenaAPI/commons-lang3-3.4.jar"/>
-	<classpathentry kind="lib" path="D:/Documenti/GitHub/p8_guidotti_dario/External JARs/JenaAPI/httpclient-4.5.2.jar"/>
-	<classpathentry kind="lib" path="D:/Documenti/GitHub/p8_guidotti_dario/External JARs/JenaAPI/httpclient-cache-4.5.2.jar"/>
-	<classpathentry kind="lib" path="D:/Documenti/GitHub/p8_guidotti_dario/External JARs/JenaAPI/httpcore-4.4.4.jar"/>
-	<classpathentry kind="lib" path="D:/Documenti/GitHub/p8_guidotti_dario/External JARs/JenaAPI/jackson-annotations-2.7.0.jar"/>
-	<classpathentry kind="lib" path="D:/Documenti/GitHub/p8_guidotti_dario/External JARs/JenaAPI/jackson-core-2.7.4.jar"/>
-	<classpathentry kind="lib" path="D:/Documenti/GitHub/p8_guidotti_dario/External JARs/JenaAPI/jackson-databind-2.7.4.jar"/>
-	<classpathentry kind="lib" path="D:/Documenti/GitHub/p8_guidotti_dario/External JARs/JenaAPI/jcl-over-slf4j-1.7.21.jar"/>
-	<classpathentry kind="lib" path="D:/Documenti/GitHub/p8_guidotti_dario/External JARs/JenaAPI/jena-arq-3.2.0.jar"/>
-	<classpathentry kind="lib" path="D:/Documenti/GitHub/p8_guidotti_dario/External JARs/JenaAPI/jena-base-3.2.0.jar"/>
-	<classpathentry kind="lib" path="D:/Documenti/GitHub/p8_guidotti_dario/External JARs/JenaAPI/jena-cmds-3.2.0.jar"/>
-	<classpathentry kind="lib" path="D:/Documenti/GitHub/p8_guidotti_dario/External JARs/JenaAPI/jena-iri-3.2.0.jar"/>
-	<classpathentry kind="lib" path="D:/Documenti/GitHub/p8_guidotti_dario/External JARs/JenaAPI/jena-rdfconnection-3.2.0.jar"/>
-	<classpathentry kind="lib" path="D:/Documenti/GitHub/p8_guidotti_dario/External JARs/JenaAPI/jena-shaded-guava-3.2.0.jar"/>
-	<classpathentry kind="lib" path="D:/Documenti/GitHub/p8_guidotti_dario/External JARs/JenaAPI/jena-tdb-3.2.0.jar"/>
-	<classpathentry kind="lib" path="D:/Documenti/GitHub/p8_guidotti_dario/External JARs/JenaAPI/jsonld-java-0.9.0.jar"/>
-	<classpathentry kind="lib" path="D:/Documenti/GitHub/p8_guidotti_dario/External JARs/JenaAPI/libthrift-0.9.3.jar"/>
-	<classpathentry kind="lib" path="D:/Documenti/GitHub/p8_guidotti_dario/External JARs/JenaAPI/log4j-1.2.17.jar"/>
-	<classpathentry kind="lib" path="D:/Documenti/GitHub/p8_guidotti_dario/External JARs/JenaAPI/slf4j-log4j12-1.7.21.jar"/>
-	<classpathentry kind="lib" path="D:/Documenti/GitHub/p8_guidotti_dario/External JARs/JenaAPI/xercesImpl-2.11.0.jar"/>
-	<classpathentry kind="lib" path="D:/Documenti/GitHub/p8_guidotti_dario/External JARs/JenaAPI/xml-apis-1.4.01.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

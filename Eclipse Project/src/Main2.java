@@ -31,7 +31,7 @@ public class Main2 {
 			"After {Power-up} becomes true until {Tdistance} is greater than 10000, {Gopen} shall {Req4} be set to true."};
 				
 				
-			String parserModel = "edu/stanford/nlp/models/lexparser/englishPCFG.ser.gz";
+			String parserModel = "englishPCFG.ser.gz";
 			LexicalizedParser lp = LexicalizedParser.loadModel(parserModel);
 			TreebankLanguagePack tlp = lp.getOp().langpack();
 			for(int i = 0; i < reqs.length; i++){
