@@ -2,7 +2,10 @@ import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+
+import Patterns.DurationPattern;
 import Patterns.Pattern;
+import Patterns.Scope;
 import edu.stanford.nlp.ling.HasWord;
 import edu.stanford.nlp.parser.common.ParserQuery;
 import edu.stanford.nlp.parser.lexparser.LexicalizedParser;
@@ -143,16 +146,91 @@ public class AssociationStanfordStrategy extends AssociationStrategy {
 		return null;
 	}
 	
-	private Pattern generatePatternFromTree(Tree tree){
+	private Pattern generatePatternFromTree(int bestTreeIndex, int bestModelIndex){
+		
+		Tree bestTree = reqTrees.get(bestTreeIndex).object();
+		Pattern bestModel = this.patternsModel.get(bestModelIndex);
+		
+		Scope newScope = generateScopeFromTree(bestModel.getScope().getType(),
+				bestTreeIndex);
 		
 		
-		
+		int patternClass = bestModel.getPatternClass();
+		switch (patternClass) {
+		case 0:
+			
+			break;
+
+		case 1:
+			
+			break;
+
+		case 2:
+			
+			break;
+
+		case 3:
+			
+			break;
+
+		case 4:
+			
+			break;
+
+		default:
+			break;
+		}
 		
 		
 		
 		
 		
 		return null;
+	}
+	
+	private Scope generateScopeFromTree(int scopeType, int treeIndex){
+		
+		Scope newScope = new Scope();
+		newScope.setType(scopeType);
+		
+		switch (scopeType) {
+		
+		case 0:
+			break;
+			
+		case 1:
+				
+			break;
+				
+		case 2:
+				
+			break;
+				
+		case 3:
+				
+			break;
+				
+		case 4:
+				
+			break;
+
+		default:
+			break;
+		}
+		
+		
+		return null;
+		
+	}
+	
+	private DurationPattern durationPatternFromTree(int treeIndex){
+		
+		
+		
+		
+		
+		return null;
+		
 	}
 
 }

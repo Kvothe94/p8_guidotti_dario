@@ -88,8 +88,8 @@ public class TreeComparingVisitor extends TreeVisitor {
 	private String aptedFormatInit(Tree tree){
 		
 		String onLineTree = tree.toString();
-		onLineTree.replaceAll("\\(", "{");
-		onLineTree.replaceAll("\\)", "}");
+		onLineTree = onLineTree.replaceAll("\\(", "{");
+		onLineTree = onLineTree.replaceAll("\\)", "}");
 		return onLineTree;
 		
 	}

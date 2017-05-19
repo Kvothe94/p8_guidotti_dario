@@ -10,7 +10,8 @@ package Patterns;
 public class Scope {
 	
 	private int type;
-	private static String[] map = {"Globally, ", "Before %s, ", "After %s, ", "Between %s and %s, ", "After %s until %s, "};
+	private static String[] map = {"Globally, ", "Before %s, ",
+			"After %s, ", "Between %s and %s, ", "After %s until %s, "};
 	
 	private String scopeVar1;
 	private String scopeVar2;

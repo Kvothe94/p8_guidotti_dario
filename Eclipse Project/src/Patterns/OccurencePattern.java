@@ -20,6 +20,14 @@ public class OccurencePattern extends QualitativePattern {
 	 * @see Pattern#asString()
 	 */
 	@Override
+	public int getPatternClass(){
+		return 1;
+	}
+	
+	/* (non-Javadoc)
+	 * @see Pattern#asString()
+	 */
+	@Override
 	public String asString() {
 		
 		if((this.patternVar1 == null) || (this.type < 0 || this.type >= OccurencePattern.map.length) 

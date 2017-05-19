@@ -19,6 +19,14 @@ public class PeriodicPattern extends RealTimePattern {
 	 * @see Pattern#asString()
 	 */
 	@Override
+	public int getPatternClass(){
+		return 3;
+	}
+	
+	/* (non-Javadoc)
+	 * @see Pattern#asString()
+	 */
+	@Override
 	public String asString() {
 		
 		if(this.type < 0 || this.type >= PeriodicPattern.map.length){

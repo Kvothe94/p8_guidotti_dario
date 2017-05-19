@@ -27,31 +27,57 @@ public class OrderPattern extends QualitativePattern {
 		this.patternVar2 = null;
 		this.patternVar3 = null;
 	}
-	
+
+	/**
+	 * @return the patternVar2
+	 */
 	public String getPatternVar2() {
 		return patternVar2;
 	}
 
+	/**
+	 * @param patternVar2 the patternVar2 to set
+	 */
 	public void setPatternVar2(String patternVar2) {
 		this.patternVar2 = patternVar2;
 	}
 
+	/**
+	 * @return the patternVar3
+	 */
 	public String getPatternVar3() {
 		return patternVar3;
 	}
 
+	/**
+	 * @param patternVar3 the patternVar3 to set
+	 */
 	public void setPatternVar3(String patternVar3) {
 		this.patternVar3 = patternVar3;
 	}
-	
+
+	/**
+	 * @return the patternVar4
+	 */
 	public String getPatternVar4() {
-		return patternVar3;
+		return patternVar4;
 	}
 
+	/**
+	 * @param patternVar4 the patternVar4 to set
+	 */
 	public void setPatternVar4(String patternVar4) {
 		this.patternVar4 = patternVar4;
 	}
 
+	/* (non-Javadoc)
+	 * @see Pattern#asString()
+	 */
+	@Override
+	public int getPatternClass(){
+		return 2;
+	}
+	
 	/* (non-Javadoc)
 	 * @see Pattern#asString()
 	 */

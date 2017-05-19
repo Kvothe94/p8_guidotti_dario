@@ -31,6 +31,14 @@ public class RTOrderPattern extends RealTimePattern {
 	 * @see Pattern#asString()
 	 */
 	@Override
+	public int getPatternClass(){
+		return 4;
+	}
+	
+	/* (non-Javadoc)
+	 * @see Pattern#asString()
+	 */
+	@Override
 	public String asString() {
 		
 		if(this.type < 0 || this.type >= RTOrderPattern.map.length){

@@ -10,8 +10,8 @@ import Patterns.*;
  */
 public abstract class AssociationStrategy {
 	
-	private Context context;
-	private List<Pattern> patternsModel;
+	protected Context context;
+	protected List<Pattern> patternsModel;
 	
 	/**
 	 * @param context
