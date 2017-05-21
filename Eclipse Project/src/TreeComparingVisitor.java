@@ -19,9 +19,9 @@ import parser.BracketStringInputParser;
 public class TreeComparingVisitor extends TreeVisitor {
 
 	private static final float MAX_DIS = 1000000;
-	private static final float DEL_COST = 1;
-	private static final float INS_COST = 1;
-	private static final float REN_COST = 1;
+	public float DEL_COST = 1;
+	public float INS_COST = 1;
+	public float REN_COST = 2;
 	
 	private int bestModelIndex;
 	private APTED<PerEditOperationStringNodeDataCostModel, StringNodeData> distanceComputer;
@@ -29,6 +29,12 @@ public class TreeComparingVisitor extends TreeVisitor {
 	/**
 	 * 
 	 */
+	public TreeComparingVisitor(float DEL_COST, float INS_COST, float REN_COST) {
+		this.bestModelIndex = -1;
+		PerEditOperationStringNodeDataCostModel costModel = new PerEditOperationStringNodeDataCostModel(DEL_COST, INS_COST, REN_COST);
+		this.distanceComputer = new APTED<PerEditOperationStringNodeDataCostModel, StringNodeData>(costModel);
+	}
+	
 	public TreeComparingVisitor() {
 		this.bestModelIndex = -1;
 		PerEditOperationStringNodeDataCostModel costModel = new PerEditOperationStringNodeDataCostModel(DEL_COST, INS_COST, REN_COST);
@@ -63,6 +69,7 @@ public class TreeComparingVisitor extends TreeVisitor {
 		
 		Tree treeReq = strategy.getReqTrees().get(treeId).object();
 		String stringTreeReq = aptedFormatInit(treeReq);
+		stringTreeReq = stringTreeReq.replaceAll(" ", "");
 		Node<StringNodeData> reqNode = aptPars.fromString(stringTreeReq);
 		
 		List<Tree> modelsTrees = strategy.getModelTrees();
@@ -71,8 +78,9 @@ public class TreeComparingVisitor extends TreeVisitor {
 			
 			Tree auxTreeModel = modelIter.next();
 			String stringTreeMod = aptedFormatInit(auxTreeModel);
+			stringTreeMod = stringTreeMod.replaceAll(" ", "");
 			Node<StringNodeData> modNode = aptPars.fromString(stringTreeMod);
-			auxDis = distanceComputer.computeEditDistance(reqNode, modNode);
+			auxDis = distanceComputer.computeEditDistance(modNode, reqNode);
 			if(auxDis < minDis){
 				minDis = auxDis;
 				bestIndex = i;

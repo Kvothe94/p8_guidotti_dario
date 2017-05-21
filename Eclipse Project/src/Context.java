@@ -1,5 +1,9 @@
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Scanner;
 
 import org.apache.jena.ontology.OntClass;
 import org.apache.jena.ontology.OntModel;
@@ -22,13 +26,32 @@ public class Context {
 	private String ontPath;
 	private String ontNS;
 	private OntModel ontModel;
+	private HashMap<String, String> signalMap; 
 	
-	public Context(String ontPath, String ontNS){
+	public Context(String ontPath, String ontNS, String signalFilePath){
 		
 		this.ontPath = ontPath;
 		this.ontNS = ontNS;
 		this.ontModel = ModelFactory.createOntologyModel( OntModelSpec.OWL_MEM );
 		this.ontModel.read(this.ontPath);
+		this.signalMap = new HashMap<String, String>();
+		
+		File signalFile = new File(signalFilePath);
+		Scanner inputStream = null;
+		try {
+			inputStream = new Scanner(signalFile);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		inputStream.nextLine();
+		while (inputStream.hasNextLine())
+		{
+		    String line = inputStream.nextLine();
+		    String[] fields = line.split(",");
+		    signalMap.put(fields[0], fields[2]);
+		    
+		}
 		
 	}
 	
@@ -60,6 +83,34 @@ public class Context {
 		this.ontModel = ontModel;
 	}
 	
+	/**
+	 * @return the ontNS
+	 */
+	public String getOntNS() {
+		return ontNS;
+	}
+
+	/**
+	 * @param ontNS the ontNS to set
+	 */
+	public void setOntNS(String ontNS) {
+		this.ontNS = ontNS;
+	}
+
+	/**
+	 * @return the signalMap
+	 */
+	public HashMap<String, String> getSignalMap() {
+		return signalMap;
+	}
+
+	/**
+	 * @param signalMap the signalMap to set
+	 */
+	public void setSignalMap(HashMap<String, String> signalMap) {
+		this.signalMap = signalMap;
+	}
+
 	public boolean isResource(String word){
 		
 		OntResource res = ontModel.getOntResource(ontNS + word);

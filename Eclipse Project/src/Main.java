@@ -5,9 +5,9 @@ import java.util.List;
 import org.apache.jena.ontology.OntProperty;
 
 import Patterns.DurationPattern;
+import Patterns.FSPattern;
 import Patterns.OccurencePattern;
 import Patterns.OrderPattern;
-import Patterns.Pattern;
 import Patterns.PeriodicPattern;
 import Patterns.RTOrderPattern;
 import Patterns.Scope;
@@ -69,7 +69,7 @@ public class Main {
 
 		//Prova Context
 		Context myContext = new Context("http://protege.stanford.edu/ontologies/pizza/pizza.owl",
-				"http://www.co-ode.org/ontologies/pizza/pizza.owl#");
+				"http://www.co-ode.org/ontologies/pizza/pizza.owl#", "signals.csv");
 		
 		if(myContext.isResource("IceCream")){
 			System.out.println("è risorsa");
@@ -94,7 +94,7 @@ public class Main {
 		}
 		
 		//Prova AssociationStanfordStrategy
-		ArrayList<Pattern> patternsModel = new ArrayList<Pattern>();
+		ArrayList<FSPattern> patternsModel = new ArrayList<FSPattern>();
 		patternsModel.add(myRTOrderPattern);
 		patternsModel.add(myDurationPattern);
 		patternsModel.add(myOccurencePattern);

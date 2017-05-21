@@ -26,6 +26,18 @@ public class RTOrderPattern extends RealTimePattern {
 	public void setPatternVar3(String patternVar3) {
 		this.patternVar3 = patternVar3;
 	}
+	
+	/* (non-Javadoc)
+	 * @see FSPattern#getPatternVar4()
+	 */
+	public String getPatternVar4(){
+		return null;
+	}
+
+	/* (non-Javadoc)
+	 * @see FSPattern#setPatternVar4()
+	 */
+	public void setPatternVar4(String patternVar1){}
 
 	/* (non-Javadoc)
 	 * @see Pattern#asString()
@@ -33,6 +45,27 @@ public class RTOrderPattern extends RealTimePattern {
 	@Override
 	public int getPatternClass(){
 		return 4;
+	}
+	
+	/* (non-Javadoc)
+	 * @see Pattern#getNumVar()
+	 */
+	@Override
+	public int getNumVar(){
+		
+		int numVar = -1;
+		switch (type) {
+		case 0:
+		case 1:
+			numVar = 3;
+			break;
+		
+		default:
+			break;
+		}
+		
+		return numVar;
+		
 	}
 	
 	/* (non-Javadoc)

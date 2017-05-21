@@ -14,9 +14,33 @@ public class PeriodicPattern extends RealTimePattern {
 	public PeriodicPattern(){
 		super();
 	}
+	
+	/* (non-Javadoc)
+	 * @see FSPattern#getPatternVar3()
+	 */
+	public String getPatternVar3(){
+		return null;
+	}
 
 	/* (non-Javadoc)
-	 * @see Pattern#asString()
+	 * @see FSPattern#setPatternVar3()
+	 */
+	public void setPatternVar3(String patternVar1){}
+	
+	/* (non-Javadoc)
+	 * @see FSPattern#getPatternVar4()
+	 */
+	public String getPatternVar4(){
+		return null;
+	}
+
+	/* (non-Javadoc)
+	 * @see FSPattern#setPatternVar4()
+	 */
+	public void setPatternVar4(String patternVar1){}
+
+	/* (non-Javadoc)
+	 * @see FSPattern#asString()
 	 */
 	@Override
 	public int getPatternClass(){
@@ -24,7 +48,27 @@ public class PeriodicPattern extends RealTimePattern {
 	}
 	
 	/* (non-Javadoc)
-	 * @see Pattern#asString()
+	 * @see FSPattern#getNumVar()
+	 */
+	@Override
+	public int getNumVar(){
+		
+		int numVar = -1;
+		switch (type) {
+		case 0:
+			numVar = 2;
+			break;
+		
+		default:
+			break;
+		}
+		
+		return numVar;
+		
+	}
+	
+	/* (non-Javadoc)
+	 * @see FSPattern#asString()
 	 */
 	@Override
 	public String asString() {

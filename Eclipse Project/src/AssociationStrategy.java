@@ -11,13 +11,13 @@ import Patterns.*;
 public abstract class AssociationStrategy {
 	
 	protected Context context;
-	protected List<Pattern> patternsModel;
+	protected List<FSPattern> patternsModel;
 	
 	/**
 	 * @param context
 	 * @param patternsModel
 	 */
-	public AssociationStrategy(Context context, List<Pattern> patternsModel){
+	public AssociationStrategy(Context context, List<FSPattern> patternsModel){
 		this.context = context;
 		this.patternsModel = patternsModel;
 	}
@@ -39,17 +39,17 @@ public abstract class AssociationStrategy {
 	/**
 	 * @return the patternsModel
 	 */
-	public List<Pattern> getPatternsModel() {
+	public List<FSPattern> getPatternsModel() {
 		return patternsModel;
 	}
 
 	/**
 	 * @param patternsModel the patternsModel to set
 	 */
-	public void setPatternsModel(List<Pattern> patternsModel) {
+	public void setPatternsModel(List<FSPattern> patternsModel) {
 		this.patternsModel = patternsModel;
 	}
 
-	public abstract Pattern associatePattern(Requirement requirement);
+	public abstract FSPattern associatePattern(Requirement requirement);
 	
 }

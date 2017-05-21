@@ -71,7 +71,7 @@ public class OrderPattern extends QualitativePattern {
 	}
 
 	/* (non-Javadoc)
-	 * @see Pattern#asString()
+	 * @see FSPattern#asString()
 	 */
 	@Override
 	public int getPatternClass(){
@@ -79,7 +79,42 @@ public class OrderPattern extends QualitativePattern {
 	}
 	
 	/* (non-Javadoc)
-	 * @see Pattern#asString()
+	 * @see FSPattern#getNumVar()
+	 */
+	@Override
+	public int getNumVar(){
+		
+		int numVar = -1;
+		switch (type) {
+		case 0:
+		case 3:
+			numVar = 2;
+			break;
+			
+		case 1:
+		case 2:
+		case 4:
+			numVar = 3;
+			break;
+			
+		case 5:
+			numVar = 4;
+			break;
+			
+		case 6:
+			numVar = 6;
+			break;
+		
+		default:
+			break;
+		}
+		
+		return numVar;
+		
+	}
+	
+	/* (non-Javadoc)
+	 * @see FSPattern#asString()
 	 */
 	@Override
 	public String asString() {

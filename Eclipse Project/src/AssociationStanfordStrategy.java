@@ -2,9 +2,15 @@ import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import Patterns.DurationPattern;
-import Patterns.Pattern;
+import Patterns.FSPattern;
+import Patterns.OccurencePattern;
+import Patterns.OrderPattern;
+import Patterns.PeriodicPattern;
+import Patterns.RTOrderPattern;
 import Patterns.Scope;
 import edu.stanford.nlp.ling.HasWord;
 import edu.stanford.nlp.parser.common.ParserQuery;
@@ -12,6 +18,8 @@ import edu.stanford.nlp.parser.lexparser.LexicalizedParser;
 import edu.stanford.nlp.process.Tokenizer;
 import edu.stanford.nlp.trees.Tree;
 import edu.stanford.nlp.trees.TreebankLanguagePack;
+import edu.stanford.nlp.trees.tregex.TregexMatcher;
+import edu.stanford.nlp.trees.tregex.TregexPattern;
 import edu.stanford.nlp.util.ScoredObject;
 
 /**
@@ -34,18 +42,18 @@ public class AssociationStanfordStrategy extends AssociationStrategy {
 	 * @param context
 	 * @param patternsModel
 	 */
-	public AssociationStanfordStrategy(Context context, List<Pattern> patternsModel) {
+	public AssociationStanfordStrategy(Context context, List<FSPattern> patternsModel) {
 		
 		super(context, patternsModel);
 		String parserModel = "englishPCFG.ser.gz";
 		this.lexParser = LexicalizedParser.loadModel(parserModel);
 		TreebankLanguagePack tlp = lexParser.getOp().langpack();
 		this.modelTrees = new ArrayList<Tree>();
-		Iterator<Pattern> patternIter = patternsModel.iterator();
+		Iterator<FSPattern> patternIter = patternsModel.iterator();
 		
 		while(patternIter.hasNext()){
 			
-			Pattern auxPattern = patternIter.next();
+			FSPattern auxPattern = patternIter.next();
 			Tokenizer<? extends HasWord> toke =
 			        tlp.getTokenizerFactory().getTokenizer(new StringReader(auxPattern.asString()));
 			List<? extends HasWord> mySentence = toke.tokenize();
@@ -56,7 +64,6 @@ public class AssociationStanfordStrategy extends AssociationStrategy {
 		}
 		
 	}
-	
 
 	/**
 	 * @return the reqTrees
@@ -65,7 +72,6 @@ public class AssociationStanfordStrategy extends AssociationStrategy {
 		return reqTrees;
 	}
 
-
 	/**
 	 * @param reqTrees the reqTrees to set
 	 */
@@ -73,14 +79,12 @@ public class AssociationStanfordStrategy extends AssociationStrategy {
 		this.reqTrees = reqTrees;
 	}
 
-
 	/**
 	 * @return the modelTrees
 	 */
 	public List<Tree> getModelTrees() {
 		return modelTrees;
 	}
-
 
 	/**
 	 * @param modelTrees the modelTrees to set
@@ -110,7 +114,7 @@ public class AssociationStanfordStrategy extends AssociationStrategy {
 	 * @see AssociationStrategy#associatePattern(Requirement)
 	 */
 	@Override
-	public Pattern associatePattern(Requirement requirement) {
+	public FSPattern associatePattern(Requirement requirement) {
 		
 		TreebankLanguagePack tlp = lexParser.getOp().langpack();
 		Tokenizer<? extends HasWord> toke =
@@ -142,86 +146,470 @@ public class AssociationStanfordStrategy extends AssociationStrategy {
 		
 		comVis.visit(this, bestIndex);
 		int bestModelIndex = comVis.getBestModelIndex();
-		
-		return null;
+		return generatePatternFromTree(requirement.getRequirement(), bestModelIndex);
 	}
 	
-	private Pattern generatePatternFromTree(int bestTreeIndex, int bestModelIndex){
+	public int testVis(Requirement requirement, float DEL_COST, float INS_COST, float REN_COST){
+		TreebankLanguagePack tlp = lexParser.getOp().langpack();
+		Tokenizer<? extends HasWord> toke =
+		        tlp.getTokenizerFactory().getTokenizer(new StringReader(requirement.getRequirement()));
+		List<? extends HasWord> mySentence = toke.tokenize();
+		ParserQuery pq = lexParser.parserQuery();
+		pq.parse(mySentence);
+		reqTrees = pq.getKBestParses(NUM_TREE);
 		
-		Tree bestTree = reqTrees.get(bestTreeIndex).object();
-		Pattern bestModel = this.patternsModel.get(bestModelIndex);
+		int bestIndex = -1;
+		int bestScore = WORST_SCORE;
+		TreeOntologyVisitor ontVis = new TreeOntologyVisitor();
+		TreeComparingVisitor comVis = new TreeComparingVisitor(DEL_COST, INS_COST, REN_COST);
 		
-		Scope newScope = generateScopeFromTree(bestModel.getScope().getType(),
-				bestTreeIndex);
+		/*
+		 * Trattamento degli alberi utilizzando l'ontologia: per il momento è una semplice verifica
+		 * che le parole indicate come nomi corrispondano a entità all'interno dell'ontologia.
+		 * Eventualmente si dovrebbe migliorare il trattamento dei dati.
+		 */
+		for(int i = 0; i < reqTrees.size(); i++){
+			
+			ontVis.visit(this, i);
+			if(ontVis.getScore() > bestScore){
+				bestScore = ontVis.getScore();
+				bestIndex = i;
+			}
+			
+		}
 		
+		comVis.visit(this, bestIndex);
+		int bestModelIndex = comVis.getBestModelIndex();
+		return bestModelIndex;
+	}
+	
+	private FSPattern generatePatternFromTree(String req, int bestModelIndex){
 		
+		FSPattern bestModel = this.patternsModel.get(bestModelIndex);
+		List<String> vars = constructVariables(req);
+		List<String> patternVars = new ArrayList<String>();
+		List<String> scopeVars = new ArrayList<String>();
+		Iterator<String> varIter = vars.iterator();
+		int scopeType = bestModel.getScope().getType();
 		int patternClass = bestModel.getPatternClass();
+		int patternType = bestModel.getType();
+		
+		Scope reqScope = new Scope();
+		reqScope.setType(scopeType);
+		switch (scopeType) {
+		case 0:
+			
+			break;
+			
+		case 1:
+		case 2:
+			if(varIter.hasNext()){
+				reqScope.setScopeVar1(varIter.next());
+			}
+			break;
+			
+		case 3:
+		case 4:
+			for(int i = 0; i < 2; i++){
+				if(varIter.hasNext()){
+					scopeVars.add(varIter.next());
+				} else {
+					scopeVars.add(null);
+				}
+			}
+			reqScope.setScopeVar1(scopeVars.get(0));
+			reqScope.setScopeVar2(scopeVars.get(1));
+			break;
+
+		default:
+			break;
+		}
+		
+		FSPattern reqPattern = null;
 		switch (patternClass) {
 		case 0:
-			
+			reqPattern = new DurationPattern();
 			break;
-
+			
 		case 1:
-			
+			reqPattern = new OccurencePattern();
 			break;
-
+			
 		case 2:
-			
+			reqPattern = new OrderPattern();
 			break;
-
+			
 		case 3:
-			
+			reqPattern = new PeriodicPattern();
 			break;
-
-		case 4:
 			
+		case 4:
+			reqPattern = new RTOrderPattern();
 			break;
 
 		default:
 			break;
 		}
 		
+		reqPattern.setType(patternType);
+		int numVars = reqPattern.getNumVar();
+		switch (numVars) {
+		case 1:
+			if(varIter.hasNext()){
+				reqPattern.setPatternVar1(varIter.next());
+			}
+			break;
+
+		case 2:
+			for(int i = 0; i < 2; i++){
+				if(varIter.hasNext()){
+					patternVars.add(varIter.next());
+				} else {
+					patternVars.add(null);
+				}
+			}
+			reqPattern.setPatternVar1(patternVars.get(0));
+			reqPattern.setPatternVar2(patternVars.get(1));
+			break;
+
+		case 3:
+			for(int i = 0; i < 3; i++){
+				if(varIter.hasNext()){
+					patternVars.add(varIter.next());
+				} else {
+					patternVars.add(null);
+				}
+			}
+			reqPattern.setPatternVar1(patternVars.get(0));
+			reqPattern.setPatternVar2(patternVars.get(1));
+			reqPattern.setPatternVar3(patternVars.get(2));
+			break;
+
+		case 4:
+			for(int i = 0; i < 4; i++){
+				if(varIter.hasNext()){
+					patternVars.add(varIter.next());
+				} else {
+					patternVars.add(null);
+				}
+			}
+			reqPattern.setPatternVar1(patternVars.get(0));
+			reqPattern.setPatternVar2(patternVars.get(1));
+			reqPattern.setPatternVar3(patternVars.get(2));
+			reqPattern.setPatternVar4(patternVars.get(3));
+			break;
+
+		default:
+			break;
+		}
 		
+		reqPattern.setScope(reqScope);
 		
-		
-		
-		return null;
+		return reqPattern;
 	}
 	
-	private Scope generateScopeFromTree(int scopeType, int treeIndex){
+	private Scope generateScopeFromTree(Scope modelScope, int treeIndex){
 		
 		Scope newScope = new Scope();
-		newScope.setType(scopeType);
+		newScope.setType(modelScope.getType());
+		Tree myTree = reqTrees.get(treeIndex).object();
 		
-		switch (scopeType) {
+		/*
+		 * Recupero dei nomi delle variabili
+		 */
+		TregexPattern myPattern = TregexPattern.compile("NP < NNP");
+		TregexMatcher myMatcher = myPattern.matcher(myTree);
+		List<String> varNames = new ArrayList<String>();
+		List<String> varValues = new ArrayList<String>();
+		List<String> varOperator = new ArrayList<String>();
 		
-		case 0:
-			break;
-			
-		case 1:
+		while (myMatcher.findNextMatchingNode()) { 
+			Tree match = myMatcher.getMatch();
+			if(match.numChildren() >= 2){	//Significa che non è l'etichetta requirement
+				varNames.add(match.getChild(1).label().toString());
+			}
+		
+		}
+		
+		/*
+		 * Recupero Valori delle variabili
+		 */
+		
+		Iterator<String> myIter = varNames.iterator();
+		while(myIter.hasNext()){
+			String name = myIter.next();
+			if(context.getSignalMap().get(name).equals("Integer")){
 				
-			break;
+				/*
+				 * Nel caso il segnale sia un integer andiamo a cercare il FSPattern
+				 * di un confronto con un valore numerico.
+				 * Per =, <=, >= bisogna sviluppare ulteriormente l'algoritmo.
+				 */
+				myPattern = TregexPattern.compile("QP < CD");
+				myMatcher = myPattern.matcher(myTree);
+				while (myMatcher.findNextMatchingNode()) { 
+					
+					Tree match = myMatcher.getMatch(); 
+					if(match.numChildren() >= 3){
+						
+						varValues.add(match.getChild(2).label().toString());
+						varOperator.add(match.getChild(0).label().toString());
+						
+					}
 				
-		case 2:
+				}
 				
-			break;
+			} else {
 				
-		case 3:
+				/*
+				 * Per il momento se non è un Integer deve essere un Boolean.
+				 */
+				myPattern = TregexPattern.compile("ADJP < JJ");
+				myMatcher = myPattern.matcher(myTree);
+				while (myMatcher.findNextMatchingNode()) { 
+					
+					Tree match = myMatcher.getMatch(); 
+					if(match.numChildren() >= 1){
+						
+						varValues.add(match.getChild(0).label().toString());
+						varOperator.add("assignment");
+						
+					}
+					
+				}
 				
-			break;
 				
-		case 4:
 				
-			break;
-
-		default:
-			break;
+				
+			}
 		}
 		
 		
 		return null;
 		
 	}
+	
+	public List<String> constructVariables(String req){
+		
+		List<String> varNames = new ArrayList<String>();
+		List<String> vars = new ArrayList<String>();
+		String varValue = null;
+		String varOperator = null;
+		
+		Pattern varNamePattern = Pattern.compile("\\{(([a-zA-z0-9]+[\\-]*[a-zA-z0-9]+)*)\\}");
+		Pattern numVarAssignPattern = Pattern.compile("(greater|less|equal) ?[(or equal)]* (than|to) ([0-9]+\\.*[0-9]*)");
+		Pattern boolVarAssignPattern = Pattern.compile("(becomes|set to|is) (true|false)");
+		Pattern reqPattern = Pattern.compile("Req[0-9*]");
+		
+		Matcher nameMatcher = varNamePattern.matcher(req);
+		Matcher numMatcher = numVarAssignPattern.matcher(req);
+		Matcher boolMatcher = boolVarAssignPattern.matcher(req);
+		Matcher auxMatcher = null;
+		
+		
+		String varName = null;
+		String varType = null;
+		String numAssign = null;
+		String boolAssign = null;
+		
+		while(nameMatcher.find()){
+			
+			varName = nameMatcher.group(1);
+			auxMatcher = reqPattern.matcher(varName);
+			if(!auxMatcher.find()){
+				varNames.add(varName);
+			}
+			
+		}
+		
+		Iterator<String> varNameIter = varNames.iterator();
+		while(varNameIter.hasNext()){
+			
+			varName = varNameIter.next();
+			varType = context.getSignalMap().get(varName);
+			varOperator = null;
+			varValue = null;
+			
+			switch (varType) {
+			case "Integer":
+			case "Real":
+				
+				if(numMatcher.find()){
+					numAssign = numMatcher.group(0);
+					auxMatcher = Pattern.compile("(greater|less|equal) ?[(or equal)]* (than|to)").matcher(numAssign);
+					if(auxMatcher.find()){
+
+						switch (auxMatcher.group(0)) {
+						
+						case "greater than":
+							varOperator = ">";
+							break;
+							
+						case "greater or equal than":
+							varOperator = ">=";
+							break;
+							
+						case "less than":
+							varOperator = "<";
+							break;
+							
+						case "less or equal than":
+							varOperator = "<=";
+							break;
+							
+						case "equal to":
+							varOperator = "=";
+							break;
+
+						default:
+							break;
+						}
+					}
+					
+					auxMatcher = Pattern.compile("([0-9]+\\.*[0-9]*)").matcher(numAssign);
+					if(auxMatcher.find()){
+						varValue = auxMatcher.group(0);
+					}
+					
+				}
+				
+				break;
+				
+			case "Boolean":
+				
+				varOperator = "=";
+				if(boolMatcher.find()){
+					boolAssign = boolMatcher.group(0);
+					auxMatcher = Pattern.compile("(true|false)").matcher(boolAssign);
+					
+					if(auxMatcher.find()){
+						switch (auxMatcher.group(0)) {
+						case "true":
+							varValue = "1";
+							break;
+							
+						case "false":
+							varValue = "0";
+							break;
+
+						default:
+							break;
+						}
+					}
+					
+				}
+				
+				break;
+
+			default:
+				break;
+			}
+			
+			vars.add("{" + varName + varOperator + varValue + "}");
+			
+		}
+		
+		return vars;
+		
+	}
+	
+	public List<String> constructVariables(Tree tree){
+		
+		/*
+		 * Recupero dei nomi delle variabili
+		 */
+		List<String> varNames = new ArrayList<String>();
+		List<String> integerVarValues = new ArrayList<String>();
+		List<String> booleanVarValues = new ArrayList<String>();
+		List<String> varOperator = new ArrayList<String>();
+		TregexPattern myPattern = TregexPattern.compile("NP < NNP");
+		TregexMatcher myMatcher = myPattern.matcher(tree);
+		
+		while (myMatcher.findNextMatchingNode()) { 
+			Tree match = myMatcher.getMatch();
+			if(match.numChildren() >= 2){	//Significa che non è l'etichetta requirement
+				varNames.add(match.getChild(1).firstChild().label().toString());
+			}
+		
+		}
+		
+		/*
+		 * Recupero Valori Variabili Intere
+		 */
+		myPattern = TregexPattern.compile("QP < CD");
+		myMatcher = myPattern.matcher(tree);
+		while (myMatcher.findNextMatchingNode()) { 
+			
+			Tree match = myMatcher.getMatch(); 
+			if(match.numChildren() >= 3){
+				
+				integerVarValues.add(match.getChild(2).firstChild().label().toString());
+				switch (match.getChild(0).firstChild().label().toString()) {
+				
+				case "greater":
+					varOperator.add(">");
+					break;
+
+				case "less":
+					varOperator.add("<");
+					break;
+					
+				default:
+					break;
+				}
+				
+			}
+		
+		}
+		
+		/*
+		 * Recupero Valori Variabili Booleane
+		 */
+		myPattern = TregexPattern.compile("ADJP < JJ");
+		myMatcher = myPattern.matcher(tree);
+		while (myMatcher.findNextMatchingNode()) { 
+			
+			Tree match = myMatcher.getMatch(); 
+			if(match.numChildren() >= 1){
+				
+				switch (match.getChild(0).firstChild().label().toString()) {
+				case "true":
+					booleanVarValues.add("1");
+					break;
+					
+				case "false":
+					booleanVarValues.add("0");
+					break;
+
+				default:
+					break;
+				}
+				varOperator.add("=");
+				
+			}
+			
+		}
+		
+		List<String> varList = new ArrayList<String>();
+		int k = 0;
+		int m = 0;
+		for(int i = 0; i < varNames.size(); i++){
+			
+			String type = context.getSignalMap().get(varNames.get(i));
+			if(type.equals("Integer")){
+				varList.add("{" + varNames.get(i) + varOperator.get(i) + integerVarValues.get(k) + "}");
+				k++;
+			} else {
+				varList.add("{" + varNames.get(i) + varOperator.get(i) + booleanVarValues.get(m) + "}");
+				m++;
+			}
+			
+		}
+		
+		return varList;
+		
+	}
+	
 	
 	private DurationPattern durationPatternFromTree(int treeIndex){
 		

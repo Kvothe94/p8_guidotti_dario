@@ -48,6 +48,31 @@ public class Scope {
 		this.scopeVar2 = scopeVar2;
 	}
 	
+	public int getNumVar(){
+	
+		int numVar = -1;
+		switch (type) {
+		case 0:
+			numVar = 0;
+			break;
+		
+		case 1:
+		case 2:
+			numVar = 1;
+			break;
+		
+		case 3:
+		case 4:
+			numVar = 2;
+			break;
+		
+		default:
+			break;
+		}
+		
+		return numVar;
+	}
+	
 	public String asString(){
 		
 		//Type not valid: it cannot be converted

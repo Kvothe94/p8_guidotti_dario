@@ -7,7 +7,7 @@ package Patterns;
  * @author Kvothe
  *
  */
-public abstract class RealTimePattern extends Pattern{
+public abstract class RealTimePattern extends FSPattern{
 	
 	protected String patternVar2;
 	
