@@ -17,42 +17,6 @@ public class OccurencePattern extends QualitativePattern {
 	}
 	
 	/* (non-Javadoc)
-	 * @see FSPattern#getPatternVar2()
-	 */
-	public String getPatternVar2(){
-		return null;
-	}
-
-	/* (non-Javadoc)
-	 * @see FSPattern#setPatternVar2()
-	 */
-	public void setPatternVar2(String patternVar1){}
-	
-	/* (non-Javadoc)
-	 * @see FSPattern#getPatternVar3()
-	 */
-	public String getPatternVar3(){
-		return null;
-	}
-
-	/* (non-Javadoc)
-	 * @see FSPattern#setPatternVar3()
-	 */
-	public void setPatternVar3(String patternVar1){}
-	
-	/* (non-Javadoc)
-	 * @see FSPattern#getPatternVar4()
-	 */
-	public String getPatternVar4(){
-		return null;
-	}
-
-	/* (non-Javadoc)
-	 * @see FSPattern#setPatternVar4()
-	 */
-	public void setPatternVar4(String patternVar1){}
-	
-	/* (non-Javadoc)
 	 * @see FSPattern#asString()
 	 */
 	@Override

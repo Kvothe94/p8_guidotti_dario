@@ -18,56 +18,8 @@ public class OrderPattern extends QualitativePattern {
 			"it is always the case that if %s holds, then %s eventually holds and is succeeded by %s, " + 
 			"where %s does not hold between %s and %s."};
 	
-	private String patternVar2;
-	private String patternVar3;
-	private String patternVar4;
-	
 	public OrderPattern(){
 		super();
-		this.patternVar2 = null;
-		this.patternVar3 = null;
-	}
-
-	/**
-	 * @return the patternVar2
-	 */
-	public String getPatternVar2() {
-		return patternVar2;
-	}
-
-	/**
-	 * @param patternVar2 the patternVar2 to set
-	 */
-	public void setPatternVar2(String patternVar2) {
-		this.patternVar2 = patternVar2;
-	}
-
-	/**
-	 * @return the patternVar3
-	 */
-	public String getPatternVar3() {
-		return patternVar3;
-	}
-
-	/**
-	 * @param patternVar3 the patternVar3 to set
-	 */
-	public void setPatternVar3(String patternVar3) {
-		this.patternVar3 = patternVar3;
-	}
-
-	/**
-	 * @return the patternVar4
-	 */
-	public String getPatternVar4() {
-		return patternVar4;
-	}
-
-	/**
-	 * @param patternVar4 the patternVar4 to set
-	 */
-	public void setPatternVar4(String patternVar4) {
-		this.patternVar4 = patternVar4;
 	}
 
 	/* (non-Javadoc)
