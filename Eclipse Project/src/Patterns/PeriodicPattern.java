@@ -4,46 +4,26 @@ package Patterns;
  */
 
 /**
+ * Classe concreta che implementa i pattern che rientrano nella categoria di
+ * Periodic Pattern.
+ * 
  * @author Guidotti Dario
  *
  */
 public class PeriodicPattern extends RealTimePattern {
 	
-	private static String[] map = {"it is always the case that %s holds at least every %s time unit(s)."};
+	private static String[] map = {"it is always the case that %s " +
+			"holds at least every %s time unit(s)."};
 	
-	public PeriodicPattern(){
+	public PeriodicPattern() {
 		super();
 	}
-	
-	/* (non-Javadoc)
-	 * @see FSPattern#getPatternVar3()
-	 */
-	public String getPatternVar3(){
-		return null;
-	}
-
-	/* (non-Javadoc)
-	 * @see FSPattern#setPatternVar3()
-	 */
-	public void setPatternVar3(String patternVar1){}
-	
-	/* (non-Javadoc)
-	 * @see FSPattern#getPatternVar4()
-	 */
-	public String getPatternVar4(){
-		return null;
-	}
-
-	/* (non-Javadoc)
-	 * @see FSPattern#setPatternVar4()
-	 */
-	public void setPatternVar4(String patternVar1){}
 
 	/* (non-Javadoc)
 	 * @see FSPattern#asString()
 	 */
 	@Override
-	public int getPatternClass(){
+	public int getPatternClass() {
 		return 3;
 	}
 	
@@ -51,7 +31,7 @@ public class PeriodicPattern extends RealTimePattern {
 	 * @see FSPattern#getNumVar()
 	 */
 	@Override
-	public int getNumVar(){
+	public int getNumVar() {
 		
 		int numVar = -1;
 		switch (type) {
@@ -73,17 +53,20 @@ public class PeriodicPattern extends RealTimePattern {
 	@Override
 	public String asString() {
 		
-		if(this.type < 0 || this.type >= PeriodicPattern.map.length){
+		if((type < 0) || (type >= PeriodicPattern.map.length)) {
 			return null;
 		}
 		
 		String stringVer = null;
-		if(this.patternVar1 != null && this.patternVar2 != null){
-			stringVer = String.format(PeriodicPattern.map[this.type], this.patternVar1, this.patternVar2);
+		if((patternVar1 != null) && (patternVar2 != null)) {
+			
+			stringVer = String.format(PeriodicPattern.map[type],
+					patternVar1, patternVar2);
+		
 		}
 		
-		if(stringVer != null && this.scope.asString() != null){
-			return this.scope.asString() + stringVer;
+		if((stringVer != null) && (scope.asString() != null)) {
+			return scope.asString() + stringVer;
 		}
 		
 		return null;

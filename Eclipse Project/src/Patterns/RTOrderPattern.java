@@ -4,13 +4,18 @@ package Patterns;
  */
 
 /**
- * @author Kvothe
+ * Classe concreta che implementa i pattern che rientrano nella categoria di
+ * RTOrder Pattern.
+ * 
+ * @author Guidotti Dario
  *
  */
 public class RTOrderPattern extends RealTimePattern {
 	
-	private static String[] map = {"it is always the case that if %s holds, then %s holds after at most %s time unit(s)",
-			"it is always the case that if %s holds, then %s holds for at least %s time unit(s)"};
+	private static String[] map = {"it is always the case that if %s holds, " + 
+			"then %s holds after at most %s time unit(s)",
+			"it is always the case that if %s holds, " + 
+			"then %s holds for at least %s time unit(s)"};
 	
 	public RTOrderPattern() {
 		super();
@@ -20,7 +25,7 @@ public class RTOrderPattern extends RealTimePattern {
 	 * @see Pattern#asString()
 	 */
 	@Override
-	public int getPatternClass(){
+	public int getPatternClass() {
 		return 4;
 	}
 	
@@ -28,7 +33,7 @@ public class RTOrderPattern extends RealTimePattern {
 	 * @see Pattern#getNumVar()
 	 */
 	@Override
-	public int getNumVar(){
+	public int getNumVar() {
 		
 		int numVar = -1;
 		switch (type) {
@@ -51,17 +56,22 @@ public class RTOrderPattern extends RealTimePattern {
 	@Override
 	public String asString() {
 		
-		if(this.type < 0 || this.type >= RTOrderPattern.map.length){
+		String stringVer = null;
+		
+		if((type < 0) || (type >= RTOrderPattern.map.length)) {
 			return null;
 		}
 		
-		String stringVer = null;
-		if(this.patternVar1 != null && this.patternVar2 != null && this.patternVar3 != null){
-			stringVer = String.format(RTOrderPattern.map[this.type], this.patternVar1, this.patternVar3, this.patternVar2);
+		if((patternVar1 != null) && (patternVar2 != null)
+				&& (patternVar3 != null)) {
+			
+			stringVer = String.format(RTOrderPattern.map[type],
+					patternVar1, patternVar3, patternVar2);
+		
 		}
 		
-		if(stringVer != null && this.scope.asString() != null){
-			return this.scope.asString() + stringVer;
+		if((stringVer != null) && (scope.asString() != null)) {
+			return scope.asString() + stringVer;
 		}
 		
 		return stringVer;

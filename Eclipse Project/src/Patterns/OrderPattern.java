@@ -4,21 +4,30 @@ package Patterns;
  */
 
 /**
+ * Classe concreta che implementa i pattern che rientrano nella categoria di
+ * Order Pattern.
+ * 
  * @author Guidotti Dario
  *
  */
 public class OrderPattern extends QualitativePattern {
 	
-	private static String[] map = {"it is always the case that if %s holds, then %s previously held.",
-			"it is always the case that if %s holds and is succeeded by %s, then %s previously held.",
-			"it is always the case that if %s holds, then %s previously held and was preceded by %s.",
+	private static String[] map = {
+			"it is always the case that if %s holds, then %s previously held.",
+			"it is always the case that if %s holds and is succeeded by %s, " + 
+			"then %s previously held.",
+			"it is always the case that if %s holds, " +
+			"then %s previously held and was preceded by %s.",
 			"it is always the case that if %s holds, then %s eventually holds.",
-			"it is always the case that if %s holds, then %s eventually holds and is succeeded by %s.",
-			"it is always the case that if %s holds and is succeeded by %s, then %s eventually holds after %s.",
-			"it is always the case that if %s holds, then %s eventually holds and is succeeded by %s, " + 
+			"it is always the case that if %s holds, " +
+			"then %s eventually holds and is succeeded by %s.",
+			"it is always the case that if %s holds and is succeeded by %s, " +
+			"then %s eventually holds after %s.",
+			"it is always the case that if %s holds, " +
+			"then %s eventually holds and is succeeded by %s, " + 
 			"where %s does not hold between %s and %s."};
 	
-	public OrderPattern(){
+	public OrderPattern() {
 		super();
 	}
 
@@ -26,7 +35,7 @@ public class OrderPattern extends QualitativePattern {
 	 * @see FSPattern#asString()
 	 */
 	@Override
-	public int getPatternClass(){
+	public int getPatternClass() {
 		return 2;
 	}
 	
@@ -34,7 +43,7 @@ public class OrderPattern extends QualitativePattern {
 	 * @see FSPattern#getNumVar()
 	 */
 	@Override
-	public int getNumVar(){
+	public int getNumVar() {
 		
 		int numVar = -1;
 		switch (type) {
@@ -71,38 +80,52 @@ public class OrderPattern extends QualitativePattern {
 	@Override
 	public String asString() {
 		
-		if(this.type < 0 || this.type >= OrderPattern.map.length){
+		if((type < 0) || (type >= OrderPattern.map.length)) {
 			return null;
 		}
 		
 		String stringVerPat = null;
-		switch (this.type) {
+		switch (type) {
 		case 0:
 		case 3:
-			if(this.patternVar1 != null && this.patternVar2 != null){
-				stringVerPat = String.format(OrderPattern.map[type], this.patternVar1, this.patternVar2);
+			if((patternVar1 != null) && (patternVar2 != null)) {
+				stringVerPat = String.format(OrderPattern.map[type],
+						patternVar1, patternVar2);
 			}
 			break;
 			
 		case 1:
 		case 2:
 		case 4:
-			if(this.patternVar1 != null && this.patternVar2 != null && this.patternVar3 != null){
-				stringVerPat = String.format(OrderPattern.map[type], this.patternVar1, this.patternVar2, this.patternVar3);
+			if((patternVar1 != null) && (patternVar2 != null)
+					&& (patternVar3 != null)) {
+				
+				stringVerPat = String.format(OrderPattern.map[type],
+						patternVar1, patternVar2, patternVar3);
+				
 			}
 			break;
 			
 		case 5:
-			if(this.patternVar1 != null && this.patternVar2 != null && this.patternVar3 != null){
-				stringVerPat = String.format(OrderPattern.map[type], this.patternVar1, this.patternVar2,
-						this.patternVar3, this.patternVar2);
+			if((patternVar1 != null) && (patternVar2 != null)
+					&& (patternVar3 != null)) {
+				
+				stringVerPat = String.format(OrderPattern.map[type],
+						patternVar1, patternVar2,
+						patternVar3, patternVar2);
+				
 			}
 			break;
 			
 		case 6:
-			if(this.patternVar1 != null && this.patternVar2 != null && this.patternVar3 != null){
-				stringVerPat = String.format(OrderPattern.map[type], this.patternVar1, this.patternVar2,
-						this.patternVar3, this.patternVar4, this.patternVar2, this.patternVar3);
+			if((patternVar1 != null) && (patternVar2 != null)
+					&& (this.patternVar3 != null)) {
+				
+				stringVerPat = String.format(OrderPattern.map[type],
+						patternVar1, patternVar2,
+						patternVar3, patternVar4,
+						patternVar2, patternVar3);
+				
 			}
 			break;
 
@@ -110,7 +133,7 @@ public class OrderPattern extends QualitativePattern {
 			break;
 		}
 		
-		if(stringVerPat != null && this.scope.asString() != null){
+		if((stringVerPat != null) && (this.scope.asString() != null)) {
 			return this.scope.asString() + stringVerPat;
 		}
 		

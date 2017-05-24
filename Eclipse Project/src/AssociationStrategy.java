@@ -5,6 +5,10 @@ import Patterns.*;
  */
 
 /**
+ * Classe astratta che fornisce la struttura generale che le strategie
+ * di traduzione dei requisiti da linguaggio naturale a FSPattern
+ * devono seguire.
+ * 
  * @author Guidotti Dario
  *
  */
@@ -50,6 +54,16 @@ public abstract class AssociationStrategy {
 		this.patternsModel = patternsModel;
 	}
 
+	/**
+	 * Metodo che compie la traduzione di un requisito in linguaggio
+	 * naturale in Formal Specification Pattern.
+	 * 
+	 * @param requirement il requisito in linguaggio naturale in forma
+	 *        di oggetto Requirement.
+	 *        
+	 * @return il FSPattern corrispondente al requisito passato
+	 *         come argomento
+	 */
 	public abstract FSPattern associatePattern(Requirement requirement);
 	
 }

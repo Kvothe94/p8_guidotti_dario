@@ -4,6 +4,11 @@
 package Patterns;
 
 /**
+ * Classe astratta che fornisce l'antenato comune di tutti i Formal Specification
+ * Pattern utilizzati all'interno del progetto.
+ * Fornisce i metodi e gli attributi necessari per l'utilizzo di tali
+ * pattern nell'ambito di traduzione automatizzata dei requisiti.
+ * 
  * @author Guidotti Dario
  *
  */
@@ -16,13 +21,19 @@ public abstract class FSPattern {
 	protected String patternVar3;
 	protected String patternVar4;
 	
-	public FSPattern(){
+	/*
+	 * Costruttore della classe: setta le variabili ai loro valori di
+	 * default.
+	 */
+	public FSPattern() {
+		
 		this.type = -1;
 		this.scope = null;
 		this.patternVar1 = null;
 		this.patternVar2 = null;
 		this.patternVar3 = null;
 		this.patternVar4 = null;
+		
 	}
 	
 	/**
@@ -122,11 +133,16 @@ public abstract class FSPattern {
 	
 	/**
 	 * 
-	 * @return the number of variable necessary for the completeness
-	 * of the pattern
+	 * @return il numero delle variabili che devono essere settate affinchè
+	 * sia possibile considerare il pattern completo.
 	 */
 	public abstract int getNumVar();
 
+	/**
+	 * @return il pattern in formato di stringa. Nel caso non siano state
+	 * settati tutti gli attributi necessari alla completezza del pattern
+	 * viene ritornato null.
+	 */
 	public abstract String asString();
 
 }

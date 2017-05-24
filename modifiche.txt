@@ -1,0 +1,7 @@
+1) Rispetto al diagramma delle classi la classe Pattern è stata rinominata FSPattern in quanto si presentava un conflitto con la classe Pattern del package java.util.
+
+2) Rispetto al diagramma delle classi le variabili dei pattern sono state spostate a più alto livello nella classe astratta antenato FSPattern conseguentemente sono stati spostati i getter e i setter. Tale scelta è stata fatta in modo da rendere sfruttabile il polimorfismo nei metodi della classe AssociationStanfordStrategy.
+
+3) Rispetto al diagramma delle classi sono state aggiunte i metodi getPatternClass() e getVarNum() necessari per sfruttare il polimorfismo nei metodi della classe AssociationStanfordStrategy.
+
+4)

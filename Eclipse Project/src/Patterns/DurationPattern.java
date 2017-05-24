@@ -4,15 +4,25 @@ package Patterns;
  */
 
 /**
+ * Classe concreta che implementa i pattern che ricadono nella categoria di Duration Pattern.
+ *
  * @author Guidotti Dario
  *
  */
 public class DurationPattern extends RealTimePattern {
 	
-	private static String[] map = {"it is always the case that once %s becomes satisfied, it holds for at least %s time unit(s).",
-			"it is always the case that once %s becomes satisfied, it holds for less than %s time unit(s)."};
+	/**
+	 * Fornisce il formato in stringa parametrizzato sulle variabili dei
+	 * diversi tipi di DurationPattern.
+	 * 
+	 */
+	private static String[] map = {
+			"it is always the case that once %s " +
+			"becomes satisfied, it holds for at least %s time unit(s).",
+			"it is always the case that once %s becomes satisfied, " + 
+			"it holds for less than %s time unit(s)."};
 	
-	public DurationPattern(){
+	public DurationPattern() {
 		super();
 	}
 	
@@ -20,7 +30,7 @@ public class DurationPattern extends RealTimePattern {
 	 * @see FSPattern#asString()
 	 */
 	@Override
-	public int getPatternClass(){
+	public int getPatternClass() {
 		return 0;
 	}
 	
@@ -28,7 +38,7 @@ public class DurationPattern extends RealTimePattern {
 	 * @see FSPattern#getNumVar()
 	 */
 	@Override
-	public int getNumVar(){
+	public int getNumVar() {
 		
 		int numVar = -1;
 		switch (type) {
@@ -51,14 +61,19 @@ public class DurationPattern extends RealTimePattern {
 	@Override
 	public String asString() {
 		
-		if(this.type < 0 || this.type >= DurationPattern.map.length){
+		if((type < 0) || (type >= DurationPattern.map.length)) {
 			return null;
 		}
 		
-		String stringVerSco = this.scope.asString();
+		String stringVerSco = scope.asString();
 		String stringVer = null;
-		if(this.patternVar1 != null && this.patternVar2 != null && stringVerSco != null){
-			stringVer = stringVerSco + String.format(DurationPattern.map[this.type], this.patternVar1, this.patternVar2);
+		if((patternVar1 != null) && (patternVar2 != null)
+				&& (stringVerSco != null)) {
+			
+			stringVer = stringVerSco + 
+					String.format(DurationPattern.map[type],
+							patternVar1, patternVar2);
+			
 		}
 		
 		return stringVer;

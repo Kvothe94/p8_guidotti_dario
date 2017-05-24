@@ -50,7 +50,7 @@ public class Main3 {
 			auxScope.setScopeVar1("R");
 			auxScope.setScopeVar2("Q");
 			
-			for(int j = 0; j <= 4; j++){
+			for(int j = 0; j <= 4; j++) {
 				
 				FSPattern reqPattern = null;
 				switch (j) {
