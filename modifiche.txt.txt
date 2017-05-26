@@ -1,0 +1,24 @@
+﻿1) Rispetto al diagramma delle classi la classe Pattern è stata rinominata FSPattern in quanto si presentava un conflitto con la classe Pattern del package java.util.
+
+
+
+2) Rispetto al diagramma delle classi nel package patterns le variabili dei pattern sono state spostate a più alto livello nella classe astratta antenato FSPattern conseguentemente sono stati spostati i getter e i setter. Tale scelta è stata fatta in modo da rendere sfruttabile il polimorfismo nei metodi della classe AssociationStanfordStrategy.
+
+
+
+3) Rispetto al diagramma delle classi nella classe FSPattern sono stati aggiunti i metodi getPatternClass() e getVarNum() necessari per sfruttare il polimorfismo nei metodi della classe AssociationStanfordStrategy.
+
+
+
+4)
+ Rispetto al diagramma delle classi nella classe Context sono stati aggiunti gli attributi ontNS, necessario
+per memorizzare il namespace dell'ontologia, e signalMap, necessario per memorizzare i dati forniti tramite il
+documento dei segnali.
+
+5) Rispetto al diagramma delle classi nella classe AssociationStanfordStrategy è stato aggiunto il metodo
+constructVariables(String) che in modo da rendere più modulare la generazione del pattern a partire dal requisito.
+è stato inoltre introdotto l'attributo WORST_SCORE necessario ai fini dell'implementazione.
+
+6) Rispetto al diagramma delle classi nella classe TreeComparingVisitor sono state aggiunte gli attributi MAX_DIS,
+DEL_COST, INS_COST, REN_COST e distanceComputer necessari all'implementazione dell'algoritmo per il calcolo della distanza tra 2 alberi.
+è stato anche introdotto il metodo aptedFormatInit(Tree) così da rendere più modulare il codice.

@@ -1,0 +1,13 @@
+Name,Signal type,Data type,Description
+Power-up,Input,Boolean,Signal sent when powering up or resetting the controller
+Tdistance,Input,Integer,The distance of the train from the gate in meters
+Tapproaching,State,Boolean,A train is approaching the gate area
+Tin,State,Boolean,A train is into the gate area
+Tleave,State,Boolean,A train is leaving the gate area
+Gopen,Output,Boolean,Gate status (gate is open when true)
+R,A,Integer,A
+Q,A,Boolean,A
+P,A,Integer,A
+S,A,Real,A
+T,A,Real,A
+Z,A,Boolean,A
