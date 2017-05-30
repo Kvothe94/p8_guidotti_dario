@@ -11,3 +11,5 @@ Il progetto è completo di documentazione javadoc nella cartella docs, nonchè deg
 rispettive cartelle.
 
 Il documento "modifiche.txt" contiene le modifiche effettuate nel passaggio dal modello all'implementazione.
+
+NB: Il tool necessita di una connessione internet attiva.
