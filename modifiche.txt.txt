@@ -22,3 +22,5 @@ constructVariables(String) che in modo da rendere più modulare la generazione d
 6) Rispetto al diagramma delle classi nella classe TreeComparingVisitor sono state aggiunte gli attributi MAX_DIS,
 DEL_COST, INS_COST, REN_COST e distanceComputer necessari all'implementazione dell'algoritmo per il calcolo della distanza tra 2 alberi.
 è stato anche introdotto il metodo aptedFormatInit(Tree) così da rendere più modulare il codice.
+
+7) Rispetto al Sequence Diagram i visitor compiono la loro visita su un oggetto di tipo AssociationStanfordStrategy e memorizzano l'indice dell'albero migliore. La generazione del pattern avviene utilizzando l'albero indicato da tale indice.
